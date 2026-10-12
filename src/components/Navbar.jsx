@@ -84,22 +84,22 @@ export default function Navbar({
           <div className="flex items-center justify-between gap-4">
             
             {/* Brand Logo & City Picker */}
-            <div className="flex items-center gap-4 sm:gap-6">
+            <div className="flex items-center gap-2 sm:gap-6">
               <div 
                 onClick={() => {
                   setActiveView('home');
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }} 
-                className="flex items-center gap-2.5 cursor-pointer select-none group"
+                className="flex items-center gap-2 cursor-pointer select-none group"
               >
-                <div className="w-9 h-9 rounded-xl bg-rose-600 flex items-center justify-center shadow-[0_0_15px_rgba(225,29,72,0.4)]">
-                  <Film className="w-5 h-5 text-white" />
+                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-rose-600 flex items-center justify-center shadow-[0_0_15px_rgba(225,29,72,0.4)] flex-shrink-0">
+                  <Film className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                 </div>
                 <div>
-                  <span className="font-extrabold text-lg tracking-tight text-white group-hover:text-rose-400 transition-colors">
+                  <span className="font-extrabold text-sm sm:text-lg tracking-tight text-white group-hover:text-rose-400 transition-colors block leading-tight">
                     Riko's Show
                   </span>
-                  <span className="text-[10px] text-slate-400 block -mt-1 font-semibold tracking-wider uppercase">
+                  <span className="text-[8px] sm:text-[10px] text-slate-400 hidden xs:block -mt-0.5 font-semibold tracking-wider uppercase">
                     Cinema Tickets
                   </span>
                 </div>
@@ -108,12 +108,12 @@ export default function Navbar({
               {/* City Switcher Trigger */}
               <button
                 onClick={() => setCityModalOpen(true)}
-                className="flex items-center gap-1.5 text-xs font-semibold text-slate-200 hover:text-white bg-white/[0.04] hover:bg-white/[0.08] px-3 py-1.5 rounded-xl border border-white/10 transition-all"
+                className="flex items-center gap-1 sm:gap-1.5 text-[11px] sm:text-xs font-semibold text-slate-200 hover:text-white bg-white/[0.04] hover:bg-white/[0.08] px-2 sm:px-3 py-1.5 rounded-xl border border-white/10 transition-all flex-shrink-0"
                 title="Change Location"
               >
-                <MapPin className="w-3.5 h-3.5 text-rose-500" />
-                <span className="capitalize">{currentCity?.name || 'Hyderabad'}</span>
-                <ChevronDown className="w-3 h-3 text-slate-400" />
+                <MapPin className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-rose-500 flex-shrink-0" />
+                <span className="capitalize max-w-[70px] sm:max-w-none truncate">{currentCity?.name || 'Hyderabad'}</span>
+                <ChevronDown className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-slate-400 flex-shrink-0" />
               </button>
             </div>
 

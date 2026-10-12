@@ -90,23 +90,23 @@ export default function MovieListing({
     <section id="movie-catalog" className="py-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
       {/* Primary Switcher Ribbon: Now Showing vs Upcoming Movies */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-white/[0.08]">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4 mb-6 pb-4 border-b border-white/[0.08]">
         
-        {/* Toggle Pills with Identical Uniform Dimensions */}
-        <div className="flex items-center p-1.5 bg-[#131622] rounded-2xl border border-white/10 w-fit">
+        {/* Toggle Pills with Identical Uniform Dimensions & Mobile Flex Fit */}
+        <div className="flex items-center p-1 sm:p-1.5 bg-[#131622] rounded-2xl border border-white/10 w-full sm:w-fit">
           <button
             onClick={() => {
               setDisplayMode("now_showing");
               setActiveTab("All Movies");
               if (onCatalogModeChange) onCatalogModeChange("now_showing");
             }}
-            className={`w-48 sm:w-52 h-11 rounded-xl text-xs font-black flex items-center justify-center gap-2 transition-all cursor-pointer text-center ${
+            className={`flex-1 sm:w-52 h-10 sm:h-11 rounded-xl text-[11px] sm:text-xs font-black flex items-center justify-center gap-1.5 sm:gap-2 transition-all cursor-pointer text-center ${
               displayMode === "now_showing"
                 ? "bg-rose-600 text-white shadow-[0_0_20px_rgba(225,29,72,0.4)]"
                 : "text-slate-400 hover:text-white hover:bg-white/[0.04]"
             }`}
           >
-            <Film className="w-4 h-4 flex-shrink-0" />
+            <Film className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
             <span>Now Showing ({movies.filter(m => m.cities?.includes(currentCity?.id || 'hyderabad')).length})</span>
           </button>
 
@@ -116,29 +116,29 @@ export default function MovieListing({
               setActiveTab("All Movies");
               if (onCatalogModeChange) onCatalogModeChange("upcoming");
             }}
-            className={`w-48 sm:w-52 h-11 rounded-xl text-xs font-black flex items-center justify-center gap-2 transition-all cursor-pointer text-center ${
+            className={`flex-1 sm:w-52 h-10 sm:h-11 rounded-xl text-[11px] sm:text-xs font-black flex items-center justify-center gap-1.5 sm:gap-2 transition-all cursor-pointer text-center ${
               displayMode === "upcoming"
                 ? "bg-amber-600 text-white shadow-[0_0_20px_rgba(217,119,6,0.4)]"
                 : "text-slate-400 hover:text-white hover:bg-white/[0.04]"
             }`}
           >
-            <Sparkles className="w-4 h-4 text-amber-300 flex-shrink-0" />
+            <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-300 flex-shrink-0" />
             <span>Upcoming ({upcomingMovies.filter(m => m.cities?.includes(currentCity?.id || 'hyderabad')).length})</span>
-            <span className="text-[9px] bg-amber-400/20 text-amber-300 px-1.5 py-0.5 rounded-full font-extrabold uppercase">
+            <span className="text-[8px] sm:text-[9px] bg-amber-400/20 text-amber-300 px-1.5 py-0.5 rounded-full font-extrabold uppercase">
               NEW
             </span>
           </button>
         </div>
 
         {/* Search Input */}
-        <div className="relative">
+        <div className="relative w-full sm:w-72">
           <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             value={searchFilter}
             onChange={(e) => setSearchFilter(e.target.value)}
-            placeholder={`Search ${displayMode === 'now_showing' ? 'running' : 'upcoming'} movies in ${currentCity?.name}...`}
-            className="bg-[#131622] border border-white/10 rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-rose-500 w-full sm:w-72 transition-all"
+            placeholder={`Search ${displayMode === 'now_showing' ? 'running' : 'upcoming'} movies...`}
+            className="bg-[#131622] border border-white/10 rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-rose-500 w-full transition-all"
           />
         </div>
 
@@ -190,8 +190,8 @@ export default function MovieListing({
         })}
       </div>
 
-      {/* Movies Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+      {/* Movies Grid (Mobile Optimized: 2 columns on mobile with tighter gap, 3 on tablet, 4 on desktop) */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
         {filteredMovies.map((movie) => {
           const isReminded = !!reminders[movie.id];
           const isUpcoming = movie.status === "upcoming";
@@ -252,34 +252,34 @@ export default function MovieListing({
               </div>
 
               {/* Movie Info */}
-              <div className="p-3.5 space-y-2.5 flex-1 flex flex-col justify-between">
+              <div className="p-2.5 sm:p-3.5 space-y-2 flex-1 flex flex-col justify-between">
                 <div>
                   <h3 
                     onClick={() => onOpenDetails(movie)}
-                    className="font-extrabold text-sm text-white group-hover:text-rose-400 transition-colors truncate cursor-pointer"
+                    className="font-extrabold text-xs sm:text-sm text-white group-hover:text-rose-400 transition-colors truncate cursor-pointer"
                   >
                     {movie.title}
                   </h3>
                   
                   {/* Proper Release Date Tag */}
-                  <div className="flex items-center gap-1.5 mt-1">
-                    <Calendar className={`w-3 h-3 flex-shrink-0 ${isUpcoming ? 'text-amber-400' : 'text-rose-500'}`} />
-                    <span className={`text-[11px] font-semibold truncate ${
+                  <div className="flex items-center gap-1 sm:gap-1.5 mt-1">
+                    <Calendar className={`w-2.5 h-2.5 sm:w-3 sm:h-3 flex-shrink-0 ${isUpcoming ? 'text-amber-400' : 'text-rose-500'}`} />
+                    <span className={`text-[10px] sm:text-[11px] font-semibold truncate ${
                       isUpcoming ? 'text-amber-300 font-bold' : 'text-slate-300'
                     }`}>
                       {isUpcoming ? `Releasing ${movie.releaseDate}` : `Released ${movie.releaseDate}`}
                     </span>
                     {movie.daysLeft && (
-                      <span className="text-[9px] bg-amber-400/20 text-amber-300 font-black px-1.5 py-0.2 rounded">
+                      <span className="hidden sm:inline text-[9px] bg-amber-400/20 text-amber-300 font-black px-1.5 py-0.2 rounded">
                         {movie.daysLeft}
                       </span>
                     )}
                   </div>
 
-                  <p className="text-[11px] text-slate-400 truncate mt-1">
+                  <p className="text-[10px] sm:text-[11px] text-slate-400 truncate mt-0.5 sm:mt-1">
                     {movie.languages.join(', ')}
                   </p>
-                  <p className="text-[10px] text-slate-500 truncate">
+                  <p className="text-[9px] sm:text-[10px] text-slate-500 truncate">
                     {movie.genres.join(' • ')} {movie.duration ? `• ${movie.duration}` : ''}
                   </p>
                 </div>
@@ -287,23 +287,23 @@ export default function MovieListing({
                 {/* Formats Pills */}
                 <div className="flex flex-wrap gap-1">
                   {movie.formats.slice(0, 2).map((fmt, i) => (
-                    <span key={i} className="text-[9px] uppercase font-bold text-rose-300 bg-rose-600/10 px-1.5 py-0.5 rounded border border-rose-600/20">
+                    <span key={i} className="text-[8px] sm:text-[9px] uppercase font-bold text-rose-300 bg-rose-600/10 px-1 sm:px-1.5 py-0.5 rounded border border-rose-600/20">
                       {fmt}
                     </span>
                   ))}
                 </div>
 
                 {/* Price & Action Button */}
-                <div className="pt-2 border-t border-white/[0.06] flex items-center justify-between gap-2">
+                <div className="pt-2 border-t border-white/[0.06] flex items-center justify-between gap-1.5 sm:gap-2">
                   <div>
-                    <span className="text-[9px] text-slate-400 uppercase font-bold block">From</span>
-                    <span className="text-xs font-black text-white">₹{movie.basePrice}</span>
+                    <span className="text-[8px] sm:text-[9px] text-slate-400 uppercase font-bold block">From</span>
+                    <span className="text-xs sm:text-sm font-black text-white">₹{movie.basePrice}</span>
                   </div>
 
                   {isUpcoming && !movie.advanceBooking ? (
                     <button
                       onClick={() => handleToggleReminder(movie.id, movie.title)}
-                      className={`flex-1 py-1.5 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                      className={`flex-1 py-1.5 px-2 sm:px-3 rounded-lg sm:rounded-xl text-[10px] sm:text-xs font-bold flex items-center justify-center gap-1 transition-all cursor-pointer ${
                         isReminded
                           ? 'bg-emerald-600 text-white font-extrabold'
                           : 'bg-white/[0.08] hover:bg-white/[0.15] text-slate-200 border border-white/10'
@@ -311,24 +311,24 @@ export default function MovieListing({
                     >
                       {isReminded ? (
                         <>
-                          <CheckCircle2 className="w-3.5 h-3.5" />
+                          <CheckCircle2 className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                           <span>Alert Set!</span>
                         </>
                       ) : (
                         <>
-                          <Bell className="w-3.5 h-3.5 text-amber-400" />
-                          <span>Notify Me</span>
+                          <Bell className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-amber-400" />
+                          <span>Notify</span>
                         </>
                       )}
                     </button>
                   ) : (
                     <button
                       onClick={() => onOpenBooking(movie)}
-                      className={`flex-1 py-1.5 px-3 rounded-xl text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm transition-colors cursor-pointer ${
+                      className={`flex-1 py-1.5 px-2 sm:px-3 rounded-lg sm:rounded-xl text-white text-[10px] sm:text-xs font-bold flex items-center justify-center gap-1 shadow-sm transition-colors cursor-pointer ${
                         isUpcoming ? 'bg-amber-600 hover:bg-amber-500 font-extrabold' : 'bg-rose-600 hover:bg-rose-500'
                       }`}
                     >
-                      <Ticket className="w-3.5 h-3.5" />
+                      <Ticket className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                       <span>{isUpcoming ? 'Advance Book' : 'Book'}</span>
                     </button>
                   )}

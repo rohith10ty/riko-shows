@@ -253,11 +253,12 @@ export default function SeatBookingEngine({
             </span>
           </div>
 
-          {/* Seating Grid */}
-          <div className="max-w-3xl mx-auto space-y-4">
-            {seatLayout.map((rowItem) => {
-              const isVip = rowItem.tier === 'VIP';
-              const tierInfo = SEAT_TIERS[rowItem.tier];
+          {/* Seating Grid (Mobile Responsive with smooth horizontal pan) */}
+          <div className="w-full overflow-x-auto pb-4 scrollbar-none">
+            <div className="min-w-[480px] sm:min-w-none max-w-3xl mx-auto space-y-3 sm:space-y-4">
+              {seatLayout.map((rowItem) => {
+                const isVip = rowItem.tier === 'VIP';
+                const tierInfo = SEAT_TIERS[rowItem.tier];
               const seatPrice = Math.round(movie.basePrice * (tierInfo?.priceMultiplier || 1));
 
               return (
@@ -310,6 +311,7 @@ export default function SeatBookingEngine({
                 </div>
               );
             })}
+            </div>
           </div>
 
           {/* Seat Tiers Legend */}
